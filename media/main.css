@@ -1,0 +1,51 @@
+:root {
+  --container-padding: 20px;
+  --input-padding-vertical: 6px;
+  --input-padding-horizontal: 4px;
+  --input-margin-vertical: 4px;
+  --input-margin-horizontal: 0;
+}
+
+body {
+  padding: spacingNone var(--container-padding);
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+  background-color: var(--vscode-editor-background);
+}
+.main{
+  display: flex;
+  width: auto;
+  flex-direction: column;
+}
+.lightspeed-prompt-input{
+  width: auto;
+  min-height: 5rem;
+  background-color: var(--vscode-banner-background);
+  color: var(--vscode-editor-foreground);
+  font-size: var(--vscode-font-size);
+  padding: 0.1rem 0.5rem;
+  margin: 0.5rem 0rem;
+}
+.prompt-buttons-area {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.submit-button {
+  background-color: var(--vscode-notificationsInfoIcon-foreground);
+  color: var(--vscode-button-foreground);
+}
+.submit-button:hover {
+  border:1px solid var(--vscode-button-foreground);
+}
+.panel-file-title{
+  max-width: 62%;
+  overflow: auto;
+  text-overflow: clip;
+  font-size: 0.5rem;
+}
+.panel-actions{
+  display:flex;
+}
