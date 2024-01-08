@@ -7,12 +7,12 @@
 }
 
 body {
-  padding: spacingNone var(--container-padding);
   color: var(--vscode-foreground);
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
   font-family: var(--vscode-font-family);
   background-color: var(--vscode-editor-background);
+  padding: 0;
 }
 .main{
   display: flex;

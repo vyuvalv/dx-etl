@@ -1,167 +1,45 @@
 {
-  "name": "lightspeed",
-  "displayName": "Lightspeed Ai",
-  "description": "Extension that is using Lightspeed AI",
+  "name": "dxtransformer",
+  "displayName": "DX File Converter",
+  "description": "Extension that helps to convert files",
   "author": "Yuval Vardi (Salesforce)",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.70.0"
   },
   "categories": [
-    "Visualization", "Extension Packs"
+    "Visualization",
+    "Extension Packs"
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
-    "configuration": {
-      "title": "LightSpeed",
-      "properties": {
-        "lightspeed-vscode.outputFolderName": {
-          "type": "string",
-          "default": "./lightspeed/vscode_ext/output",
-          "description": "Where to store project files"
-        },
-        "lightspeed-vscode.llmKey": {
-          "type": "string",
-          "default": "",
-          "description": "OpenAi key or any other supported LLM key"
-        }
-      }
-    },
     "commands": [
       {
-        "command": "lightspeed-vscode.copyFromEditor",
-        "title": "🚀 Add to Lightspeed Prompt"
-      },
-      {
-        "command": "lightspeed-vscode.openLightspeed",
-        "title": "🚀 Open Lightspeed"
-      },
-      {
-        "command": "lightspeed-vscode.submitMetadataPlan",
-        "title": "🚀 Analyse Metadata Depedencies plan",
-        "icon":"$(folder-library)"
-      },
-      {
-        "command": "lightspeed-vscode.createProject",
-        "title": "🚀 New SFDX Project"
-      },
-      {
-        "command": "lightspeed-vscode.generateCodeFiles",
-        "title": "🚀 Generate Full Project Code"
-      },
-      {
-        "command": "lightspeed-vscode.openMetadataPlan",
-        "title": "Metadata Plan",
-        "icon":"$(circuit-board)"
-      },
-      {
-        "command": "lightspeed-vscode.generateCodeFromFile",
-        "title": "🚀 Generate Code",
-        "icon": "$(debug-alt-small)"
-      },
-      {
-        "command": "lightspeed-vscode.deleteItem",
-        "title": "Delete",
-        "icon": "$(trash)"
-      },
-      {
-        "command": "lightspeed-vscode.editItem",
-        "title": "Edit",
-        "icon": "$(pencil)"
+        "command": "dxtransformer.openView",
+        "title": "🚀 Open CSV Transformer 🚀"
       }
     ],
-    "viewsContainers": {
-      "activitybar": [
+    "views": {
+      "explorer": [
         {
-          "id": "lightspeed-vscode",
-          "title": "Lightspeed",
-          "icon": "$(rocket)",
-          "contextValue":"lightspeedContainer"
-        }
-      ]
-    },
-    "viewsWelcome": [
-      {
-        "view": "workbench.explorer.emptyView",
-        "contents": "\n\n  🚀  Use LightSpeed Ai to kick start a Salesforce Project \n[Open LightSpeed](command:lightspeed-vscode.openLightspeed)\n[New Project ](command:lightspeed-vscode.createProject)"
-      }
-    ],
-    "views": {     
-      "lightspeed-vscode": [ 
-        {
-          "type": "webview",
-          "id": "lightspeed-vscode.view",
-          "name": "LightSpeed Ai"
-        },
-        {
-          "type": "webview",
-          "id": "lightspeed-vscode.prompt",
-          "name": "LightSpeed Prompt Ai"
-        },
-        {
-          "type": "tree",
-          "id": "lightspeed-vscode.filePlan",
-          "name": "files Plan View",
-          "when": "lightspeed-vscode.isFilePlanAvailable==true"
-        },
-        {
-          "id": "lightspeed-vscode.depsPlan",
-          "name": "Dependencies Plan",
-          "when": "lightspeed-vscode.isDepsPlanAvailable==true && lightspeed-vscode.stage == depsPlan"
+          "id": "dxtransformer.csvFiles",
+          "name": "CSV Files"
         }
       ]
     },
     "menus": {
-      "editor/context": [
+      "explorer/context": [
         {
-          "command": "lightspeed-vscode.copyFromEditor"
+          "command": "dxtransformer.openView",
+          "when": "resourceExtname == '.csv'"
         }
       ],
-      "webview/context": [
-        {
-          "command": "lightspeed-vscode.copyFromEditor",
-          "when": "webviewId == lightspeed-vscode.prompt",
-          "group": "navigation"
-        }
-      ],
-      "view/title": [
-        {
-          "command": "lightspeed-vscode.createProject",
-          "when": "view == lightspeed-vscode.view",
-          "group": "navigation"
-        },
-        {
-          "command": "lightspeed-vscode.generateCodeFiles",
-          "when": "view == lightspeed-vscode.filePlan",
-          "group": "group"
-        },
-        {
-          "command": "lightspeed-vscode.submitMetadataPlan",
-          "when": "view == lightspeed-vscode.filePlan",
-          "group": "navigation"
-        },
-        {
-          "command": "lightspeed-vscode.openMetadataPlan",
-          "when": "view == lightspeed-vscode.depsPlan",
-          "group": "navigation"
-        }
-      ],
+      "view/title": [],
       "view/item/context": [
         {
-          "command": "lightspeed-vscode.deleteItem",
-          "when": "viewItem == file || viewItem == folder",
-          "group": "inline"
-        },
-        {
-          "command": "lightspeed-vscode.editItem",
-          "when": "viewItem == file",
-          "group": "inline"
-        },
-        {
-          "command": "lightspeed-vscode.generateCodeFromFile",
-          "when": "viewItem == file",
-          "group": "inline"
+          "command": "dxtransformer.openView",
+          "group": "navigation"
         }
       ]
     }
@@ -195,6 +73,7 @@
     "webpack-cli": "^5.1.1"
   },
   "dependencies": {
-    "axios": "^1.5.0"
+    "axios": "^1.5.0",
+    "csv-parser": "^3.0.0"
   }
 }

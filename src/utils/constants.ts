@@ -2,7 +2,7 @@
 import * as path from 'path';
 
 export const LIGHTSPEED_UI_PATH = path.join(
-  'lightspeed_vs_ui',
+  'dx_converter_vs_ui',
   'dist'
 );
 

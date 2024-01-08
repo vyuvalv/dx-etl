@@ -15,6 +15,7 @@ export class CMD {
   public static GENERATE_METADATA_PLAN_FROM_EDITOR:string = 'lightspeed-vscode.generateMetadataPlanFromEditor';
   // VIEWS
   public static LIGHTSPEED_WEBVIEW = 'lightspeed-vscode.view';
+  public static LIGHTSPEED_EDITOR = 'lightspeed-vscode.editor';
   public static LIGHTSPEED_PROMPT_VIEW = 'lightspeed-vscode.prompt';
   public static LIGHTSPEED_METADATA_TREE_PLAN = 'lightspeed-vscode.filePlan';
   public static LIGHTSPEED_DEPEDENCY_TREE_PLAN = 'lightspeed-vscode.depsPlan';

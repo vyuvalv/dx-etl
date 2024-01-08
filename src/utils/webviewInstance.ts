@@ -11,12 +11,12 @@ export class WebviewInstance {
   public currentMessage:any;
 
 
-  constructor(context: vscode.ExtensionContext, uri: vscode.Uri) {
+  constructor(context: vscode.ExtensionContext, uri?: vscode.Uri) {
     // Create webview panel
     this.webviewPanel = vscode.window.createWebviewPanel(
-      'lightSpeedAI',
-      'lightSpeedAI',
-      vscode.ViewColumn.Two,
+      uri?.fsPath ? uri?.fsPath: 'CsvTransformer',
+      'CsvTransformer',
+      vscode.ViewColumn.Active,
       {
         // Enable scripts in the webview
 				enableScripts: true,
@@ -24,11 +24,16 @@ export class WebviewInstance {
       }
     );
 
-    // Set webview panel content
-    this.webviewPanel.webview.html = this.getWebviewContent(
-      context,
-      this.webviewPanel.webview
-    );
+      const doHtml = async () =>{
+        // Set webview panel content
+        this.webviewPanel.webview.html = await this.getWebviewContent(
+          context,
+          this.webviewPanel.webview
+        );
+      };
+  
+      doHtml();
+   
 
     // Define handler for received messages
     this.webviewPanel.webview.onDidReceiveMessage(
@@ -61,12 +66,14 @@ export class WebviewInstance {
   private getWebviewContent(
     context: vscode.ExtensionContext,
     webview: vscode.Webview
-  ) {
+  ):Promise<string> {
+    return new Promise((resolve, reject) => {
     const pathToApp = path.join(context.extensionPath, LIGHTSPEED_UI_PATH);
     const pathToHtml = path.join(pathToApp, HTML_FILE);
     let html = fs.readFileSync(pathToHtml).toString();
     html = HtmlUtils.transformHtml(html, pathToApp, webview);
-    return html;
+    return resolve(html);
+    });
   }
 
   protected onDidReceiveMessageHandler(event: any): void {
