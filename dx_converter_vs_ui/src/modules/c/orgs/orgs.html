@@ -1,0 +1,68 @@
+<template>
+ <lightning-card title="Salesforce Orgs">
+  <div slot="actions">
+    <lightning-button-icon title="Refresh" icon-name="utility:refresh" variant="border-filled" onclick={handleRefreshOrgs}></lightning-button-icon>
+
+  </div>
+
+
+<div class="slds-p-around_small">
+    <lightning-spinner if:true={loading} variant="brand" size="small" alternative-text="loading orgs"></lightning-spinner>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+    
+      <lightning-accordion-section name="A" label={nonScratchOrgsTotalTitle}>
+        <div slot="actions">
+          <lightning-button-menu tooltip="Select Org Actions" menu-alignment="right" alternative-text="Show menu" onselect={handleOrgAction}>
+              <lightning-menu-item value="connect" label="connect" icon-name="utility:apex_plugin" ></lightning-menu-item>
+          </lightning-button-menu>
+        </div>
+      <ul class="slds-list_vertical-space ">
+          <template for:each={nonScratchOrgs} for:item="org">
+            <li key={org.orgId} class="slds-list__item slds-border_bottom slds-p-bottom_x-small slds-m-bottom_x-small slds-theme_shade slds-p-around_x-small">
+              <lightning-tile label={org.alias} type="media" actions={orgActions} onclick={blockNavigation} onactiontriggered={handleTileSelectedMenuAction}>
+                <lightning-icon slot="media" icon-name={org.orgIcon} data-org={org.username}></lightning-icon>
+                <p class="slds-truncate" title="Username">{org.username}</p>
+                <p class="slds-truncate" title="Status">Status: {org.connectedStatus}</p>
+                <p class="slds-truncate" title="isDevHub">isDevHub: {org.isDevHub}</p>
+            </lightning-tile>
+          </li>
+        </template>
+      </ul>
+      <div class="slds-grid pagination-buttons">
+        <lightning-button-icon disabled={first} aria-label="back" icon-name="utility:chevronleft" onclick={handleBack} variant="border-filled" title="back" ></lightning-button-icon>
+        <lightning-button-icon disabled={last} class="slds-m-left-x-small" aria-label="next" icon-name="utility:chevronright" onclick={handleNext} variant="border-filled" title="next" ></lightning-button-icon>
+      </div>
+    </lightning-accordion-section>
+    <lightning-accordion-section name="B" label="Scratch Orgs">
+      <div slot="actions">
+        <lightning-button-menu tooltip="Select Org Actions" menu-alignment="right" alternative-text="Show menu" onselect={handleOrgAction}>
+            <lightning-menu-item value="create" label="Create" icon-name="utility:connected_apps" ></lightning-menu-item>
+        </lightning-button-menu>
+      </div>
+      <template for:each={scratchOrgs} for:item="org">
+        <li key={org.orgId} class="slds-list__item slds-border_bottom slds-p-bottom_x-small slds-m-bottom_x-small slds-theme_shade slds-p-around_x-small">
+          <lightning-tile data-alias={org.alias} label={org.alias} type="media" actions={scratchActions} onclick={blockNavigation} onactiontriggered={handleTileSelectedMenuAction}>
+            <lightning-icon slot="media" icon-name={org.orgIcon} data-org={org.username}></lightning-icon>
+            <p class="slds-truncate" title="Username">{org.username}</p>
+            <p class="slds-truncate" title="Status">{org.status}</p>
+            <p class="slds-truncate" title="Edition">{org.edition}</p>
+        </lightning-tile>
+      </li>
+    </template>
+   </lightning-accordion-section>
+    </lightning-accordion>
+      <!-- Modal settings for Api call -->
+      <c-modal header="Create Org" size="small" if:true={openSettingsModal} onclose={toggleSettingsModal}>
+        <div slot="body">
+            <div class="slds-p-around_medium">
+                <lightning-input label="Org alias" name="orgalias" value={orgAlias} onchange={setOrgAlias}></lightning-input>
+            </div>
+        </div>
+        <div slot="footer">
+            <lightning-button icon-name="utility:add" label="Connect Org" variant="brand" onclick={handleConnectOrg}></lightning-button>
+        </div>
+    </c-modal>
+  </div>
+ </lightning-card>
+</template>
+

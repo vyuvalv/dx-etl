@@ -1,0 +1,105 @@
+<!-- sldsValidatorIgnore -->
+<template>
+
+  <div class="prompt-container slds-p-around_x-small">
+    <ul class="slds-grid slds-grid_vertical">
+      <template for:each={promptExamples} for:item="example">
+        <li key={example.id} class="example-line-item slds-m-around_x-small">
+          <div data-value={example.value} class="slds-box example-box" onclick={handleCopyToClipboard}>
+            {example.value}
+          </div>
+          <span class="slds-grid slds-grid_align-spread example-pagination-buttons">
+            <lightning-button-icon disabled={first} title="back" icon-name="utility:chevronleft" onclick={handleBack} variant="border-filled"></lightning-button-icon>
+            <lightning-button-icon disabled={last} title="next" icon-name="utility:chevronright" onclick={handleNext} variant="border-filled"></lightning-button-icon>
+          </span>
+          <span class="example-copy-button">
+            <lightning-button-icon class="copy-button" title="copy" data-value={example.value} icon-name="utility:copy" onclick={handleCopyToClipboard} variant="border-filled"></lightning-button-icon>
+          </span>
+        </li>
+      </template>
+    </ul>
+    <!-- Short Prompt -->
+    <div class="prompt-input-container slds-form-element">
+      <label class="input-label slds-form-element__label slds-text-title_bold" for="prompt-textarea">Solution Requirements (Short description)</label>
+      <div class="slds-form-element__control">
+        <textarea id="prompt-textarea" data-section="description" placeholder="Type your requirements..." onkeyup={handleChangeInput} class="slds-textarea textarea-custom textarea-text-style">
+          {prompt.description} 
+        </textarea>
+      </div>
+    </div>
+    <div class="slds-m-vertical_medium slds-grid slds-grid_reverse">
+      <lightning-button-icon icon-name="utility:delete" variant="border-filled" onclick={handleClear}></lightning-button-icon>
+    </div>
+
+    <lightning-accordion allow-multiple-sections-open active-section-name="us">
+      <lightning-accordion-section  name="us" label="User Story">
+        <div slot="actions">
+          <lightning-button label="Refine User Story" title="refinement" icon-name="utility:sync" variant="brand" onclick={handleSubmitForRefinment}></lightning-button>
+        </div>
+        <div class="user-story-form slds-p-around_small">
+          <!-- As A (Role) -->
+          <lightning-input class="input-label prompt-input slds-text-title_bold" variant="label-inline" label="As A (Role)" 
+                        value={prompt.role} data-section="role" onchange={handleChangeInput}></lightning-input>
+          <!-- I want to (Action) -->
+          <div class="prompt-input-container slds-form-element">
+            <label class="input-label slds-form-element__label slds-text-title_bold" for="prompt-action">I want to (Action)</label>
+            <div class="slds-form-element__control">
+              <textarea id="prompt-action" data-section="action" placeholder="What action you wish to perform?" onkeyup={handleChangeInput} class="slds-textarea textarea-custom textarea-text-userstory">
+                {prompt.action}
+              </textarea>
+            </div>
+          </div>
+          <!-- So that I can (Output) -->
+          <div class="prompt-input-container slds-form-element">
+            <label class="input-label slds-form-element__label slds-text-title_bold" for="prompt-output">So that I can (Output)</label>
+            <div class="slds-form-element__control">
+              <textarea id="prompt-output" data-section="output" placeholder="Whats the Output of your actions?" onkeyup={handleChangeInput} class="slds-textarea textarea-custom textarea-text-userstory">
+                {prompt.output}
+              </textarea>
+            </div>
+          </div>
+        </div>
+    </lightning-accordion-section>
+        <lightning-accordion-section  name="ac" label="Acceptance Criterias">
+            <div slot="actions">
+                <lightning-button-icon title="add" icon-name="utility:add" variant="border-filled" onclick={addCriteriaLine}></lightning-button-icon>
+            </div>
+            <div class="ac-form slds-p-around_small">
+              
+            <template for:each={prompt.acceptanceCriterias} for:item="ac" for:index="index">
+            <div key={ac.id} class="ac-line-item slds-grid slds-wrap" >
+              <div class="ac-order slds-size_1-of-12">
+                <lightning-badge label={ac.order}></lightning-badge>
+              </div>
+              <div class="ac-details slds-size_11-of-12">
+                <div class="prompt-input-container slds-form-element">
+                  <label class="input-label slds-form-element__label slds-text-title_bold" for={ac.id}>Functional/Technical Requirements</label>
+                  <div class="slds-form-element__control">
+                    <textarea id={ac.id} data-section="ac" data-value={ac.value} data-index={index} placeholder="Type your requirements..." onblur={handleItemChange} class="slds-textarea textarea-custom textarea-text-style">
+                      {ac.value}
+                    </textarea>
+                  </div>
+                </div>
+
+              </div>
+              <div class="slds-size_1-of-1 slds-m-vertical_medium slds-grid slds-grid_reverse">
+                <lightning-button-icon data-index={index} icon-name="utility:delete" variant="border-filled" onclick={deleteCriteriaLine}></lightning-button-icon>
+              </div>
+            </div>
+          </template>
+        </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <div class="slds-m-vertical_medium slds-grid slds-grid_reverse">
+    
+      <!-- Submit -->
+      <lightning-button
+            name="submit"
+            label="Submit"
+            variant="success"
+            onclick={handleSubmit}></lightning-button>
+    </div>
+  </div>
+
+</template>
+

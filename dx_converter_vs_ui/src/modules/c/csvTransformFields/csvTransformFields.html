@@ -1,0 +1,36 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card title="Transform">
+        <div slot="actions">
+            <lightning-button-icon icon-name="utility:add" variant="border-filled" title="add" onclick={handleNewRow}></lightning-button-icon>
+        </div>
+   <div class="slds-p-around_small">
+
+    <template if:true={fieldsMapping.length} for:each={fieldsMapping} for:item="mapping">
+  
+        <div key={mapping.id} class="slds-box slds-grid slds-grid_align-center">
+            <!-- YV: must turn off yarn watch for testing in vscode -->
+                <lightning-combobox class="dx-mapping-field"
+                        data-id={mapping.id}
+                        label="Source"
+                        value={mapping.source}
+                        options={fieldOptions}
+                        onchange={handleSourceFieldChange} ></lightning-combobox>
+                
+                <lightning-icon class="slds-align-bottom slds-m-horizontal_small" icon-name="utility:chevronright" variant="base" size="medium"></lightning-icon>
+                
+                <lightning-input class="dx-mapping-field" label="Target" type="search" data-id={mapping.id} data-source={mapping.sourceField} value={mapping.target} onchange={handleTargetFieldChange}></lightning-input>
+                
+                <lightning-button-icon class="slds-align-bottom slds-m-horizontal_small" icon-name="utility:delete" variant="border-filled" data-id={mapping.id} title="delete" onclick={handleDeleteRow}></lightning-button-icon>
+        </div> 
+    </template>
+
+</div>
+<div >
+    <lightning-button label="Convert" icon-name="utility:add" variant="border-filled" title="add" onclick={submitMap}></lightning-button>
+</div>
+
+
+
+</lightning-card>
+</template>

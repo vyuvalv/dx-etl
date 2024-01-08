@@ -1,0 +1,24 @@
+{
+  "env": {
+    "node": true,
+    "commonjs": true,
+    "browser": true,
+    "es6": true
+  },
+  "plugins": ["inclusive-language", "jsdoc", "eslint-plugin-header"],
+  "rules": {
+    "@lwc/lwc/no-async-operation": "off",
+    "@lwc/lwc/no-inner-html": "warn",
+    "@lwc/lwc/no-document-query": "warn",
+    "inclusive-language/use-inclusive-words": [
+      "warn",
+      {
+        "allowedTerms": [
+          { "term": "masterlabel", "allowPartialMatches": true },
+          { "term": "master-label", "allowPartialMatches": true }
+        ]
+      }
+    ]
+  },
+  "sourceType": "module"
+}

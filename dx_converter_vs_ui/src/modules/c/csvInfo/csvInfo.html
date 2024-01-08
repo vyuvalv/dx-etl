@@ -1,0 +1,41 @@
+<!-- sldsValidatorIgnore -->
+<template>
+   
+    <div class="ai-mat-container">
+                <!-- CSV DETAILS -->
+                <div class="slds-box">
+                    <h1>Total Rows: <b>{totalRows}</b></h1>
+                    <h1>Total columns: <b>{columns.length}</b></h1>
+                
+                </div>
+                <div class="mapping-panel">
+                     <!-- YV: must turn off yarn watch for testing in vscode -->
+                    <c-csv-transform-fields columns={fieldOptions} onconvert={handleUpdateData}></c-csv-transform-fields>
+                </div>
+             
+                <table class="slds-m-around_medium slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <template for:each={columns} for:item="header">
+                            <th key={header} class="csv-column" scope="col">
+                            <div class="slds-truncate" title={header}>{header}</div>
+                            </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                        <tr key={row.id} class="slds-hint-parent">
+                            <template for:each={row.fields} for:item="field">
+                                <td key={field.fieldName} class="csv-column" data-label={field.fieldName}>
+                                    <div class="slds-truncate" title={field.fieldName}>{field.fieldValue}</div>
+                                </td>
+                           </template>
+                        </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+  
+</div>
+</template>
